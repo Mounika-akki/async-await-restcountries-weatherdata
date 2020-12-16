@@ -1,3 +1,42 @@
+async function getCountriesInfo() {
+    const url = "https://restcountries.eu/rest/v2/all";
+    try {
+        let response = await fetch(url);
+        let countriesData = await response.json();
+        CreateLayout(countriesData);
+
+        console.log(countriesData);
+    } catch (err) {
+        console.error(err);
+    }
+}
+getCountriesInfo();
+
+async function getWeatherData(lat, lon) {
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=6a2dc5c88ac66187359b866cf4e1cea8`;
+    try {
+        const response = await fetch(url);
+        let data = await response.json();
+        // console.log(data);
+        return data;
+    } catch (err) {
+        console.error(err);
+    }
+}
+// getWeatherData(lat,lon);
+
+async function displayWeatherData(lat, lon) {
+    try {
+        let data = await getWeatherData(lat, lon);
+        console.log(data);
+        createModal(data);
+    } catch(error){
+        console.error(error);
+    }
+}
+// displayWeatherData(33,65);
+
+
 function createCustomElement(elemName, elemClass = "", elemId = "") {
     var element = document.createElement(elemName);
     element.setAttribute("class", elemClass);
@@ -138,61 +177,3 @@ function createModal(data) {
     modalFooter.append(closeButton);
     modalContent.append(modalHeader, modalBody, modalFooter);
 }
-
-async function displayWeatherData(lat, lon) {
-    try {
-        let data = await getWeatherData(lat, lon);
-        console.log(data);
-        createModal(data);
-    } catch(error){
-        console.error(error);
-    }
-}
-// displayWeatherData(33,65);
-
-async function getWeatherData(lat, lon) {
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=6a2dc5c88ac66187359b866cf4e1cea8`;
-    try {
-        const response = await fetch(url);
-        let data = await response.json();
-        // console.log(data);
-        return data;
-    } catch (err) {
-        console.error(err);
-    }
-}
-// getWeatherData(lat,lon);
-
-
-async function getCountriesInfo() {
-    const url = "https://restcountries.eu/rest/v2/all";
-    try {
-        let response = await fetch(url);
-        let countriesData = await response.json();
-        CreateLayout(countriesData);
-
-        console.log(countriesData);
-    } catch (err) {
-        console.error(err);
-    }
-}
-getCountriesInfo();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
